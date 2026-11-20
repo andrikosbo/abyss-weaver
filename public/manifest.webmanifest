@@ -1,0 +1,12 @@
+{
+  "name": "Abyss Weaver by Dorothy",
+  "short_name": "Abyss Weaver",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#02040c",
+  "theme_color": "#02040c",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

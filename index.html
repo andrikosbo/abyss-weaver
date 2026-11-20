@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#02040c" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Abyss Weaver — weave loops of living light to ensnare the creatures of the deep and rise 3,000 metres to the surface." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <title>Abyss Weaver | Dorothy</title>
+  </head>
+  <body>
+    <div id="game" aria-label="Game surface"></div>
+    <div id="vignette" aria-hidden="true"></div>
+    <div id="hurt" aria-hidden="true"></div>
+
+    <div id="ui">
+      <!-- Loading -->
+      <section id="screen-loading" class="screen active" aria-live="polite">
+        <div class="loading-inner">
+          <div class="logo-mark" aria-hidden="true"></div>
+          <div class="loading-title">ABYSS WEAVER</div>
+          <div class="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
+          <div class="loading-text" id="loading-text">Kindling the lantern…</div>
+        </div>
+      </section>
+
+      <!-- Main menu -->
+      <section id="screen-menu" class="screen" aria-label="Main menu">
+        <div class="menu-wrap">
+          <header class="title-block">
+            <div class="title-kicker">A tale of light at the bottom of the sea</div>
+            <h1 class="title"><span>ABYSS</span><span>WEAVER</span></h1>
+            <p class="tagline">Weave loops of living light. Ensnare the dark. Rise.</p>
+          </header>
+          <nav class="menu-buttons">
+            <button class="btn primary" data-action="ascent">
+              <span class="btn-label">Begin the Ascent</span>
+              <span class="btn-sub">12 waves · 3,000 m to the surface</span>
+            </button>
+            <button class="btn" data-action="endless">
+              <span class="btn-label">Endless Abyss</span>
+              <span class="btn-sub">How deep can your light go?</span>
+            </button>
+            <div class="btn-row">
+              <button class="btn small" data-action="howto">How to Play</button>
+              <button class="btn small" data-action="settings">Settings</button>
+            </div>
+          </nav>
+          <div class="records" id="records"></div>
+          <a class="brand" href="https://dorothy.gr" target="_blank" rel="noopener" aria-label="Dorothy (opens in a new tab)">
+            <span class="brand-kicker">a game by</span>
+            <img src="./dorothy-logo.webp" width="560" height="161" alt="Dorothy" decoding="async" />
+          </a>
+        </div>
+        <button class="icon-btn corner" id="btn-fullscreen" data-action="fullscreen" aria-label="Toggle fullscreen" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+        </button>
+      </section>
+
+      <!-- How to play -->
+      <section id="screen-howto" class="screen" aria-label="How to play">
+        <div class="panel wide">
+          <h2>How to Play</h2>
+          <div class="howto-grid">
+            <div class="howto-demo">
+              <svg viewBox="0 0 220 160" class="demo-svg" aria-hidden="true">
+                <defs>
+                  <filter id="dglow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="2.4" result="b" />
+                    <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+                  </filter>
+                </defs>
+                <g class="demo-foes">
+                  <circle cx="98" cy="74" r="7" />
+                  <circle cx="118" cy="88" r="7" />
+                  <circle cx="104" cy="98" r="7" />
+                  <circle cx="170" cy="40" r="7" class="outside" />
+                </g>
+                <path class="demo-path" filter="url(#dglow)" d="M20 140 C 40 120, 60 60, 100 44 S 160 60, 150 100 S 90 140, 72 110 S 80 50, 120 40 L 150 30" />
+                <circle class="demo-head" r="5" filter="url(#dglow)">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" path="M20 140 C 40 120, 60 60, 100 44 S 160 60, 150 100 S 90 140, 72 110 S 80 50, 120 40 L 150 30" />
+                </circle>
+                <circle class="demo-burst" cx="108" cy="86" r="10" />
+              </svg>
+              <p class="demo-caption">Cross your own trail to close a loop. Everything inside is ensnared.</p>
+            </div>
+            <div class="howto-text">
+              <h3>Goal</h3>
+              <p>Rise from 3,000 m to the surface. Clear each wave of creatures by enclosing them in loops of light. Bigger loops with more creatures inside score multiplied points. Loop again quickly to build a <b>chain</b>.</p>
+              <h3>Danger</h3>
+              <p>Touching a creature costs one light. Lose them all and the dark wins. Spiny creatures and eels <b>cut your thread</b>, so loop around them, not through them.</p>
+              <h3>Surge</h3>
+              <p>Collect pearls to charge <b>Surge</b>. While it lasts, your thread can't be cut, it grows longer, you score double and you are untouchable.</p>
+              <h3>Controls</h3>
+              <ul class="controls">
+                <li><span class="k">Touch</span> Drag anywhere like a trackpad. Tap <b>Surge</b> (bottom-right) with another finger.</li>
+                <li><span class="k">Mouse</span> Your light follows the cursor. Click or <b>Space</b> for Surge.</li>
+                <li><span class="k">Keys</span> <b>WASD</b> / arrows to swim · <b>Space</b> Surge · <b>Esc</b>/<b>P</b> pause</li>
+                <li><span class="k">Gamepad</span> Left stick · <b>A</b> Surge · <b>Start</b> pause</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="bestiary-title">Bestiary</h3>
+          <div class="bestiary" id="bestiary"></div>
+          <div class="panel-actions"><button class="btn small" data-action="back">Back</button></div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="screen-settings" class="screen dim" aria-label="Settings">
+        <div class="panel">
+          <h2>Settings</h2>
+          <div class="setting">
+            <label for="set-music">Music</label>
+            <input type="range" id="set-music" min="0" max="100" step="5" />
+          </div>
+          <div class="setting">
+            <label for="set-sfx">Sound effects</label>
+            <input type="range" id="set-sfx" min="0" max="100" step="5" />
+          </div>
+          <div class="setting">
+            <span class="setting-label">Graphics quality</span>
+            <div class="seg" id="set-quality" role="radiogroup" aria-label="Graphics quality">
+              <button role="radio" data-value="auto">Auto</button>
+              <button role="radio" data-value="high">High</button>
+              <button role="radio" data-value="low">Battery</button>
+            </div>
+          </div>
+          <div class="setting">
+            <span class="setting-label">Touch steering</span>
+            <div class="seg" id="set-touch" role="radiogroup" aria-label="Touch steering">
+              <button role="radio" data-value="relative">Trackpad</button>
+              <button role="radio" data-value="direct">Follow finger</button>
+            </div>
+          </div>
+          <div class="setting">
+            <label for="set-sens">Touch sensitivity</label>
+            <input type="range" id="set-sens" min="60" max="220" step="5" />
+          </div>
+          <div class="setting">
+            <span class="setting-label">Screen shake</span>
+            <button class="toggle" id="set-shake" role="switch" aria-label="Screen shake" aria-checked="true"><span></span></button>
+          </div>
+          <div class="setting">
+            <span class="setting-label">Reduce flashing</span>
+            <button class="toggle" id="set-flash" role="switch" aria-label="Reduce flashing" aria-checked="false"><span></span></button>
+          </div>
+          <div class="panel-actions settings-actions">
+            <button type="button" class="btn small reset-trigger" id="reset-game-data">Reset local data</button>
+            <button type="button" class="btn small" data-action="back">Done</button>
+          </div>
+          <p id="reset-status" class="reset-status" role="status"></p>
+        </div>
+      </section>
+
+      <!-- HUD -->
+      <section id="screen-hud" class="screen hud" aria-label="Game status">
+        <div class="hud-top">
+          <div class="hud-left">
+            <div class="score" id="hud-score">0</div>
+            <div class="hearts" id="hud-hearts" aria-label="Lights remaining"></div>
+          </div>
+          <div class="hud-center">
+            <div class="depth" id="hud-depth">3,000 m</div>
+            <div class="wave" id="hud-wave">Wave 1</div>
+            <div class="bossbar" id="hud-boss" hidden>
+              <div class="boss-name" id="hud-boss-name"></div>
+              <div class="boss-pips" id="hud-boss-pips"></div>
+            </div>
+          </div>
+          <div class="hud-right">
+            <button class="icon-btn" data-action="pause" aria-label="Pause">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chain" id="hud-chain" aria-live="polite"></div>
+        <div class="hint" id="hud-hint"></div>
+        <div class="toast" id="hud-toast"></div>
+        <button class="surge-btn" id="hud-surge" data-action="surge" aria-label="Activate Surge">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="surge-track" cx="50" cy="50" r="44" />
+            <circle class="surge-fill" id="hud-surge-fill" cx="50" cy="50" r="44" />
+          </svg>
+          <span class="surge-label">SURGE</span>
+          <span class="surge-key">SPACE</span>
+        </button>
+      </section>
+
+      <!-- Wave banner -->
+      <div id="banner" aria-live="polite">
+        <div class="banner-depth" id="banner-depth"></div>
+        <div class="banner-title" id="banner-title"></div>
+        <div class="banner-sub" id="banner-sub"></div>
+      </div>
+
+      <!-- Pause -->
+      <section id="screen-pause" class="screen dim" aria-label="Paused">
+        <div class="panel narrow">
+          <h2>Paused</h2>
+          <div class="pause-stats" id="pause-stats"></div>
+          <div class="stack">
+            <button class="btn primary" data-action="resume">Resume</button>
+            <button class="btn" data-action="restart">Restart run</button>
+            <button class="btn" data-action="settings">Settings</button>
+            <button class="btn" data-action="quit">Quit to menu</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upgrade choice -->
+      <section id="screen-upgrade" class="screen dim" aria-label="Choose a blessing">
+        <div class="upgrade-wrap">
+          <div class="upgrade-kicker" id="upgrade-kicker">Wave cleared</div>
+          <h2>Choose a Blessing</h2>
+          <div class="cards" id="upgrade-cards"></div>
+        </div>
+      </section>
+
+      <!-- Game over -->
+      <section id="screen-gameover" class="screen dim" aria-label="Game over">
+        <div class="panel narrow end">
+          <div class="end-kicker">The deep reclaims you</div>
+          <h2 class="end-title">The Light Fades</h2>
+          <div class="end-score" id="over-score">0</div>
+          <div class="end-best" id="over-best"></div>
+          <dl class="end-stats" id="over-stats"></dl>
+          <div class="stack">
+            <button class="btn primary" data-action="retry">Rise Again</button>
+            <button class="btn" data-action="quit">Main menu</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Victory -->
+      <section id="screen-victory" class="screen dim light" aria-label="Victory">
+        <div class="panel narrow end">
+          <div class="end-kicker">0 m · The surface</div>
+          <h2 class="end-title">Dawn Breaks</h2>
+          <p class="end-text">You carried the last light out of the abyss. Above you, for the first time, a sun.</p>
+          <div class="end-score" id="win-score">0</div>
+          <div class="end-best" id="win-best"></div>
+          <dl class="end-stats" id="win-stats"></dl>
+          <div class="stack">
+            <button class="btn primary" data-action="endless">Descend into the Endless Abyss</button>
+            <button class="btn" data-action="retry">Ascend again</button>
+            <button class="btn" data-action="quit">Main menu</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <dialog class="reset-dialog" id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-note">
+      <h2 id="reset-title">Reset local data?</h2>
+      <p id="reset-note">This clears your Abyss Weaver settings and best scores in this browser.</p>
+      <form method="dialog" class="panel-actions">
+        <button type="submit" class="btn small" value="cancel" autofocus>Cancel</button>
+        <button type="submit" class="btn small reset-trigger" value="reset">Reset</button>
+      </form>
+    </dialog>
+
+    <noscript>Abyss Weaver needs JavaScript to run.</noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

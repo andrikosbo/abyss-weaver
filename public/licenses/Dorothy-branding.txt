@@ -1,0 +1,7 @@
+Dorothy branding
+
+The Dorothy name and wordmark are reserved. The wordmark shipped as
+dorothy-logo.webp is included for the official Abyss Weaver presentation.
+It is excluded from the MIT license for the game source. Permission from
+the brand owner is required to reuse the Dorothy marks in a different
+presentation or indicate Dorothy endorsement.
